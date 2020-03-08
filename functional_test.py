@@ -10,7 +10,7 @@ class NewVisitorTest(unittest.TestCase):
         #user go to the website
         self.browser.get('http://localhost:8000')
         #user see the title as to-do
-        self.assertIn("to-do",self.browser.title)
+        self.assertIn("To-Do",self.browser.title)
         self.fail('finish the test')
         #user enter 
         
