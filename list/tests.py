@@ -2,8 +2,10 @@ from django.test import TestCase
 from django.urls import resolve
 from django.http import HttpRequest
 from list.views import home_page
-# Create your tests here.
 
+from selenium import webdriver
+
+# Create your tests here.
 # this is second line
 class HomePageTest(TestCase):
     def test_root_url_resolves_to_homepage_view(self):
