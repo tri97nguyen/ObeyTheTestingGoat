@@ -30,9 +30,16 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows),
-            msg="the todo task is not in the row",
+            any(row.text == 'Buy peacock feathers' for row in rows),
+            f"the todo task is not in the row. Content was \n{table.text} for table.text ",
         )
+
+        # after see the first todo task, she put in the second task and hit enter
+        time.sleep(1)
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('2: Use peacock feathers to make a fly')
+        inputbox.send_keys(Keys.ENTER)
+        self.assertIn('2: Use peacock feathers to make a fly',table.text)
         
 
 

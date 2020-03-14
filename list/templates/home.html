@@ -5,10 +5,16 @@
     
     <body>
         <h1>Your To-Do list</h1>
-        <input id="id_new_item" placeholder="Enter a to-do item" type="text">
+        <form action="" method="post">
+            <input id="id_new_item" placeholder="Enter a to-do item" type="text" name="item_text">
+            {%csrf_token%}
+            <input type="submit" value="">
+        </form>
+        
         <table id="id_list_table">
             <tr>
-                <p>1: Buy peacock feathers</p>
+                
+                <td>{{ new_item_text }}</td>
             </tr>
         </table>
     </body>
