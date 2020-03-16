@@ -1,21 +1,26 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from django.test import LiveServerTestCase
 import unittest
 import time
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
+
     def tearDown(self):
         self.browser.quit()
+
     def check_task_in_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])
+
     def test_visitor_visit_page(self):
         #user go to the website
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
+        
         #user see the title as to-do
         self.assertIn("To-Do",self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
@@ -43,5 +48,5 @@ class NewVisitorTest(unittest.TestCase):
 
         self.fail('finish the test')
         
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
