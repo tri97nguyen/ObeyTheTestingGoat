@@ -19,5 +19,6 @@ from list import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name='home'),
-    url(r'^list/unique-list-url-for-each-user$', views.view_list, name='view_list')
+    url(r'^list/unique-list-url-for-each-user$', views.view_list, name='view_list'),
+    url(r'^list/new$', views.new_list, name='new_list')
 ]
