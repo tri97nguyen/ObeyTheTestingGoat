@@ -28,19 +28,19 @@ class HomePageTest(TestCase):
     def test_can_redirect_after_POST_requets(self):
         response = self.client.post('/',{'item_text':'some input'})
         self.assertEqual(response.status_code,302)
-        self.assertEqual(response['location'],'/')
+        self.assertEqual(response['location'],'/list/unique-list-url-for-each-user')
 
     
 
-    def test_template_display_multiple_list_item(self):
-        Item.objects.create(text='first item')
-        Item.objects.create(text='second item')
+    # def test_template_display_multiple_list_item(self):
+    #     Item.objects.create(text='first item')
+    #     Item.objects.create(text='second item')
 
-        response = self.client.get('/')
-        html = response.content.decode()
+    #     response = self.client.get('/')
+    #     html = response.content.decode()
 
-        self.assertIn('first item',html)
-        self.assertIn('second item',html)
+    #     self.assertIn('first item',html)
+    #     self.assertIn('second item',html)
 
 
     def test_saving_and_retrieving_items(self):
@@ -59,4 +59,43 @@ class HomePageTest(TestCase):
         second_saved_item = saved_items[1]
         self.assertEqual(first_saved_item.text,first_item.text)
         self.assertEqual(second_saved_item.text,second_item.text)
+
+class ListViewTest(TestCase):
+
+    def test_template_display_multiple_list_item(self):
+        Item.objects.create(text='first item')
+        Item.objects.create(text='second item')
+
+        response = self.client.get('/list/unique-list-url-for-each-user')
+        html = response.content.decode()
+        self.assertContains(response, 'first item')
+        self.assertContains(response, 'second item')
+
+        self.assertIn('first item', html)
+        self.assertIn('second item', html)
+
+    def test_list_template_is_different_from_home_template(self):
+        listResponse = self.client.get('/list/unique-list-url-for-each-user')
+        self.assertTemplateUsed(listResponse,'list.html')
+
+    def test_list_template_display_all_todo_items(self):
+        Item.objects.create(text='first todo')
+        Item.objects.create(text='second todo')
+        listResponse = self.client.get('/list/unique-list-url-for-each-user')
+
+        self.assertContains(listResponse,'first todo')
+        self.assertContains(listResponse,'second todo')
+        
+
+
+
+
+    # def test_template_submitting_POST_request_will_display_todo_task_in_unique_url(self):
+    #     self.client.post('/',{'item_text':'first_item'})
+    #     response = self.client.get('/list/unique-list-url-for-each-user')
+    #     self.assertContains(response,'first_item')
+
+    #     self.client.post('/',{'item_text':'second_item'})
+    #     response = self.client.get('/list/unique-list-url-for-each-user')
+    #     self.assertContains(response,'second_item')
         
