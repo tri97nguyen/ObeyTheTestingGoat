@@ -109,7 +109,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         # Francis hits enter and sees todo tasks appear
-        self.wait_for_row_in_list_table('buy milk')
+        self.wait_for_row_in_list_table('1: buy milk')
         # Francis sees his unique url
         self.assertRegex(self.browser.current_url, '/list/.+')
         # Francis url is unique form Edith
