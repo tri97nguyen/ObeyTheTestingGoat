@@ -1,20 +1,16 @@
-{% extends 'base.html' %}
-
-{% block header_text %}Start a new To-Do list{% endblock %}
-
-{% block form_action %}/list/new{% endblock %}
-
-<!-- <html>
+<html>
     <head>
         <title>To-Do lists</title>
     </head>
     
     <body>
-        <h1>Start a new To-Do list</h1>
-        <form action="/list/new" method="post">
+        <h1>{% block header_text %}{% endblock %}</h1>
+        <form action="{% block form_action %}{% endblock %}" method="post">
             <input id="id_new_item" placeholder="Enter a to-do item" type="text" name="item_text">
             {%csrf_token%}
             <input type="submit" value="">
         </form>
+        {% block table %}
+        {% endblock %}
     </body>
-</html> -->
+</html>
