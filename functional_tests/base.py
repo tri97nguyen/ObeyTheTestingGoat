@@ -6,10 +6,10 @@ import time
 import os
 
 
-
 MAX_WAIT = 10
 
 class FunctionalTest(StaticLiveServerTestCase):
+
     def setUp(self):
         self.browser = webdriver.Firefox()
         staging_server = os.environ.get('STAGING_SERVER')
@@ -28,6 +28,17 @@ class FunctionalTest(StaticLiveServerTestCase):
                 self.assertIn(
                     row_text, [row.text for row in rows], f'{[row.text for row in rows]}')
                 return
+            except (AssertionError, WebDriverException) as e:
+                if time.time() - start_time > MAX_WAIT:
+                    raise e
+                # time.sleep(0.5)
+
+    def wait_for(self, fn):
+        print(f"Max_wait is {MAX_WAIT}")
+        start_time = time.time()
+        while True:
+            try:
+                fn()
             except (AssertionError, WebDriverException) as e:
                 if time.time() - start_time > MAX_WAIT:
                     raise e
